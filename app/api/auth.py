@@ -1,0 +1,1 @@
+# Handles /login and /register endpoints

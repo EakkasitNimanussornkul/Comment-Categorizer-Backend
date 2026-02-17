@@ -1,0 +1,1 @@
+# Handles /submit-review and /get-reviews endpoints

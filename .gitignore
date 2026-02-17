@@ -1,0 +1,42 @@
+# --- Python Standard ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# --- Virtual Environments ---
+# It's standard to name envs 'venv', 'env', or '.venv'
+venv/
+env/
+.venv/
+.env
+
+# --- Environment Variables & Secrets ---
+# NEVER commit this. It contains API keys/passwords.
+.env
+.env.local
+.env.*
+
+# --- Machine Learning Models ---
+# Ignore serialized models (pickle, joblib)
+*.pkl
+*.joblib
+*.pt
+*.pth
+*.h5
+*.onnx
+
+# Ignore directories where you might save models/data temporarily
+models/
+data/
+datasets/
+
+# --- Logs & Databases ---
+*.log
+*.sqlite3
+*.db
+
+# --- IDE Settings ---
+.vscode/
+.idea/
+*.swp

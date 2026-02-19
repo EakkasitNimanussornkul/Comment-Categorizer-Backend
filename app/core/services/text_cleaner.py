@@ -51,6 +51,3 @@ def preprocess(text):
     # Join back into a string
     return ' '.join(lemmatized_tokens)
 
-
-# Apply the cleaning function
-df_balanced['cleaned_content'] = df_balanced['content'].apply(preprocess)

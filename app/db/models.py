@@ -2,7 +2,9 @@
 from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from database import Base
+
+# THE FIX: Tell Python exactly where 'Base' lives
+from app.db.connection import Base 
 
 class User(Base):
     __tablename__ = "users"
@@ -34,8 +36,7 @@ class Review(Base):
     id = Column(Integer, primary_key=True, index=True)
     rating = Column(Integer)
     review_text = Column(Text)
-    predicted_category = Column(String) # Bug, Noise, Feature
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    sentiment = Column(String) # Bug, Noise, Feature
     
     app_id = Column(Integer, ForeignKey("apps.id"))
     

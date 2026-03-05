@@ -1,18 +1,20 @@
 # this is to connect to the db
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, declarative_base
 
-# CHANGE THIS to your password and db name!
-# Format: postgresql://username:password@localhost/dbname
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:password123@localhost/nlp_db"
+# 1. Import your settings object from wherever you saved it
+from app.config.setting import settings
 
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+# 2. Create the engine using the URL validated by Pydantic
+engine = create_engine(settings.DATABASE_URL.get_secret_value())
+
+# 3. Create the session maker
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+# 4. Create the Base class
 Base = declarative_base()
 
-# Dependency (This helps you get the DB session in your endpoints)
+# 5. Dependency for FastAPI routes
 def get_db():
     db = SessionLocal()
     try:

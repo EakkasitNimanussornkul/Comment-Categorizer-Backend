@@ -20,3 +20,12 @@ class ReviewResponse(BaseModel):
     # This config line is for pydantic to read a sql object instead of a dict
     class Config:
         from_attributes = True
+
+class RegisterRequest(BaseModel):
+    email: str
+    password: str
+    username: str
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str

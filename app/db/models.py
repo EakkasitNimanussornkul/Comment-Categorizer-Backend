@@ -9,10 +9,9 @@ from app.db.connection import Base
 class User(Base):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(String, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
     email = Column(String, unique=True, index=True)
-    password_hash = Column(String)
     
     # Relationship to Apps
     apps = relationship("App", back_populates="owner")
@@ -24,7 +23,7 @@ class App(Base):
     name = Column(String, index=True)
     description = Column(Text, nullable=True)
     
-    user_id = Column(Integer, ForeignKey("users.id"))
+    user_id = Column(String, ForeignKey("users.id"))
     
     # Relationships
     owner = relationship("User", back_populates="apps")

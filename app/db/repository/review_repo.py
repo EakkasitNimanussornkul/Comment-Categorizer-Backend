@@ -22,3 +22,16 @@ def save_review(db: Session, app_id: int, text: str, rating: int, sentiment: str
     
     # 5. Return the saved database object (optional, but good practice)
     return new_review
+
+def get_reviews_by_app(db: Session, app_id: int):
+    # Fetch all reviews that belong to this specific app
+    return db.query(Review).filter(Review.app_id == app_id).all()
+
+def delete_review_from_db(db: Session, review: Review):
+    # 1. Stage the deletion
+    db.delete(review)
+    
+    # 2. Commit (push) the changes to Supabase
+    db.commit()
+    
+    return True

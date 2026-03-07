@@ -29,6 +29,6 @@ app = FastAPI(title="NLP API", lifespan=lifespan)
 app.include_router(health.router, prefix="/health", tags=["Health"])
 app.include_router(auth.router, prefix="/auth", tags=["Auth"])
 app.include_router(review.router, prefix="/reviews", tags=["Reviews"])
-app.include_router(stats.router, prefix="/stats", tags=["Dashboard"])
+app.include_router(stats.router, prefix="/stats", tags=["stats"])
 app.include_router(apps.router, prefix="/apps", tags=["Apps"])
     

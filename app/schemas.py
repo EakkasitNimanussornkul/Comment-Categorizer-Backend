@@ -14,7 +14,8 @@ class ReviewRecieve(BaseModel):
     app_id: int = Field(None, description="ID of the app being reviewed")
 
 class ReviewResponse(BaseModel):
-    text: str
+    id: int
+    review_text: str
     rating: int
     sentiment: str  # e.g., "Bug", "Feature", "Noise"
     app_id: int

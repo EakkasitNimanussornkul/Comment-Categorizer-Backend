@@ -28,6 +28,10 @@ class App(Base):
     # Relationships
     owner = relationship("User", back_populates="apps")
     reviews = relationship("Review", back_populates="app")
+    
+    @property
+    def review_count(self) -> int:
+        return len(self.reviews)
 
 class Review(Base):
     __tablename__ = "reviews"

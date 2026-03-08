@@ -6,6 +6,7 @@ from app.api import review
 from app.api import stats
 from app.api import apps
 from app.core.services.ai_predict import predictor
+from fastapi.middleware.cors import CORSMiddleware
 
 
 @asynccontextmanager
@@ -24,6 +25,20 @@ async def lifespan(app: FastAPI):
 # Create the FastAPI app and run with lifespan
 app = FastAPI(title="NLP API", lifespan=lifespan)
 
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:8080", 
+]
+
+# 3. Add the middleware to your app
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,    # Allows your Vue app to connect
+    allow_credentials=True,   # Allows cookies/tokens
+    allow_methods=["*"],      # ALLOWS ALL METHODS (This fixes the OPTIONS 405 error!)
+    allow_headers=["*"],      # Allows all headers
+)
 
 # Include the router
 app.include_router(health.router, prefix="/health", tags=["Health"])

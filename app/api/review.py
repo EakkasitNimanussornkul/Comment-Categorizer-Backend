@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
 from realtime import List
-from realtime import List
 from sqlalchemy.orm import Session
 
 from app.core.services.ai_predict import predictor

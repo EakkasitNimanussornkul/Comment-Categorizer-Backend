@@ -35,7 +35,9 @@ origins = [
 FRONTEND_URL = os.getenv("FRONTEND_URL")
 
 if FRONTEND_URL:
-    origins.append(FRONTEND_URL)
+    # This strips any accidental trailing slashes from your GitHub Secret!
+    clean_url = FRONTEND_URL.rstrip("/")
+    origins.append(clean_url)
 
 app.add_middleware(
     CORSMiddleware,

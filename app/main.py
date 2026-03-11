@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.concurrency import asynccontextmanager
 from app.api import health
@@ -28,10 +29,14 @@ app = FastAPI(title="NLP API", lifespan=lifespan)
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "http://localhost:8080", 
+    "http://localhost:8080",
 ]
 
-# 3. Add the middleware to your app
+FRONTEND_URL = os.getenv("FRONTEND_URL")
+
+if FRONTEND_URL:
+    origins.append(FRONTEND_URL)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,    # Allows your Vue app to connect

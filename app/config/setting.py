@@ -8,6 +8,8 @@ class Settings(BaseSettings):
     SUPABASE_URL: str
     SUPABASE_KEY: str  
 
+    FRONTEND_URL: str
+
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
 # Create the globally available settings object

@@ -50,6 +50,7 @@ jobs:
             docker run -d \
               --name review-backend \
               -p 8000:8000 \
+              --env-file /home/ubuntu/.env \
               -e FRONTEND_URL="${{ secrets.NETLIFY_URL }}" \
               -v /home/ubuntu/model:/app/model \
               ${{ secrets.DOCKERHUB_USERNAME }}/review-backend:latest

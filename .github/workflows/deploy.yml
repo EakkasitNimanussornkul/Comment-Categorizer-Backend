@@ -1,0 +1,58 @@
+name: Deploy NLP Backend to EC2
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out the latest code from GitHub
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Log in to your DockerHub account
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 3. Build the image and push it to DockerHub
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/review-backend:latest
+
+      # 4. Connect to your EC2 instance and run the new image
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+
+            # Pull the latest image from DockerHub
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/review-backend:latest
+            
+            # Stop and remove the old container if it is running
+            docker stop review-backend || true
+            docker rm review-backend || true
+            
+            # Run the new container! 
+            # Notice we are using the EC2 folder path for the volume mount here
+            docker run -d \
+              --name review-backend \
+              -p 8000:8000 \
+              -e FRONTEND_URL="${{ secrets.NETLIFY_URL }}" \
+              -v /home/ubuntu/model:/app/model \
+              ${{ secrets.DOCKERHUB_USERNAME }}/review-backend:latest
+              
+            # Clean up old, unused Docker images so your EC2 hard drive doesn't fill up!
+            docker image prune -a -f

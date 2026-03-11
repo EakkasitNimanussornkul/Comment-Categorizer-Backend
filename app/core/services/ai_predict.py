@@ -29,7 +29,7 @@ class ReviewPredictor:
         
         # Step 3: Scale the score (THE FIX IS HERE)
         # Change 'rating' to whatever column name you used when training!
-        score_df = pd.DataFrame([[star_rating]], columns=['rating']) 
+        score_df = pd.DataFrame([[star_rating]], columns=['score']) 
         score_features = self.scaler.transform(score_df)
         
         # Step 4: Combine them
